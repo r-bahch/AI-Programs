@@ -103,9 +103,11 @@ namespace _3_AStar
             Console.WriteLine();
         }
 
-        //TODO: Change that shit
+        //print route to console
         private static void ShowRoute(List<Point> path, bool[,] map, Point start, Point end)
         {
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+
             for (int i = 0; i <  map.GetLength(1); i++) 
             {
                 for (int j = 0; j < map.GetLength(0); j++)

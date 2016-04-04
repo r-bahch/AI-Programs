@@ -82,45 +82,44 @@ namespace _5_ConstraintSatisfactionQueens
 
             for (;;)
             {
-                // Find queen/queens that have the least conflicts
-                //int maxConflictCount = 0, conflicts;
-                int minConflictCount = size, conflicts;
+                // Find queen/queens that have the most conflicts
+                int maxConflictCount = 0, conflicts;
                 possibleQueens.Clear();
                 for (int c = 0; c < size; c++)
                 {
                     conflicts = Conflicts(queens[c], c);
-                    if (conflicts == minConflictCount)
+                    if (conflicts == maxConflictCount)
                     {
                         possibleQueens.Add(c);
                     }
-                    else if (conflicts < minConflictCount)
+                    else if (conflicts > maxConflictCount)
                     {
                         possibleQueens.Clear();
                         possibleQueens.Add(c);
-                        minConflictCount = conflicts;
+                        maxConflictCount = conflicts;
                     }
                 }
 
-                if (minConflictCount == size-1)
+                if (maxConflictCount == 0)
                 {
                     //if there are no conflicts
                     return;
                 }
 
                 // Pick a random queen with maximum conflicsts
-                int leastConflictColumn = possibleQueens[random.Next(possibleQueens.Count)];
+                int mostConflictColumn = possibleQueens[random.Next(possibleQueens.Count)];
 
-                // Find the square in the selected queen's column that has max conflicts
-                int maxConflictCount = size*5;
+                // Find the square in the selected queen's column that has min conflicts
+                int minConflictCount = queens.Length;
                 possibleQueens.Clear();
                 for (int r = 0; r < size; r++)
                 {
-                    conflicts = Conflicts(r, leastConflictColumn);
+                    conflicts = Conflicts(r, mostConflictColumn);
                     if (conflicts == minConflictCount)
                     {
                         possibleQueens.Add(r);
                     }
-                    else if (conflicts > minConflictCount)
+                    else if (conflicts < minConflictCount)
                     {
                         minConflictCount = conflicts;
                         possibleQueens.Clear();
@@ -128,19 +127,17 @@ namespace _5_ConstraintSatisfactionQueens
                     }
                 }
 
-                
-
                 // put the queen in that square
                 if (possibleQueens.Count > 0)
                 {
-                    queens[leastConflictColumn] =
+                    queens[mostConflictColumn] =
                         possibleQueens[random.Next(possibleQueens.Count)];
                 }
 
                 steps++;
                 Swaps++;
 
-                if (steps > queens.Length*2)
+                if (steps > queens.Length * 2)
                 {
                     //if the steps exeed the acceptable number, start over
                     queens = DistributeQueens();

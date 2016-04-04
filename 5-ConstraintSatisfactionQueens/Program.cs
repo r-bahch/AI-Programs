@@ -7,7 +7,7 @@ namespace _5_ConstraintSatisfactionQueens
     {
         static void Main(string[] args)
         {
-            ChessBoard board = new ChessBoard(20);
+            ChessBoard board = new ChessBoard(50);
             Stopwatch sw = new Stopwatch();
             sw.Start();
             board.Solve();
